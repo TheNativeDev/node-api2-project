@@ -173,49 +173,67 @@ router.delete("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const id = req.params.id;
-  const postData = req.body;
+  const {title, contents} = req.body;
+
+  !title || !contents ?
+  res.status(400).json({errorMessage: "Please provide title and contents for the post."}):
+  
 
   Posts.findById(id)
-    .then(post => {
-      if (post.length > 0) {
-        if (!postData.title || !postData.contents) {
-          res.status(400).json({
-            errorMessage: "Please provide title and contents for the post."
-          });
-        } else {
-          Posts.update(id, {
-            title: postData.title,
-            contents: postData.contents
-          })
-            .then(updated => {
-              Posts.findById(id)
-                .then(post => res.status(200).json(post))
-                .catch(error => {
-                  console.log(error);
-                  res.status(500).json({
-                    error: "The post information could not be modified."
-                  });
-                });
-            })
-            .catch(error => {
-              console.log(error);
-              res
-                .status(500)
-                .json({ error: "The post information could not be modified." });
-            });
-        }
-      } else {
-        res
-          .status(404)
-          .json({ message: "The post with the specified ID does not exist." });
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      res
-        .status(500)
-        .json({ error: "The post information could not be modified." });
-    });
-});
+  .then(post=>{
+    post[0]?
+    Posts.update(id, req.body)
+    .then(Post =>{
+      res.status(200).json(Post)
+    }):
+    res.status(404).json({ message: "The post with the specified ID does not exist." });
+  }) 
+  .catch(err =>{
+    res.status(500).json({
+                          error: "The post information could not be modified."
+                        });
+  })
+})
+//     .then(post => {
+//       if (post.length > 0) {
+//         if (!postData.title || !postData.contents) {
+//           res.status(400).json({
+//             errorMessage: "Please provide title and contents for the post."
+//           });
+//         } else {
+//           Posts.update(id, {
+//             title: postData.title,
+//             contents: postData.contents
+//           })
+//             .then(updated => {
+//               Posts.findById(id)
+//                 .then(post => res.status(200).json(post))
+//                 .catch(error => {
+//                   console.log(error);
+//                   res.status(500).json({
+//                     error: "The post information could not be modified."
+//                   });
+//                 });
+//             })
+//             .catch(error => {
+//               console.log(error);
+//               res
+//                 .status(500)
+//                 .json({ error: "The post information could not be modified." });
+//             });
+//         }
+//       } else {
+//         res
+//           .status(404)
+//           .json({ message: "The post with the specified ID does not exist." });
+//       }
+//     })
+//     .catch(error => {
+//       console.log(error);
+//       res
+//         .status(500)
+//         .json({ error: "The post information could not be modified." });
+//     });
+// });
 
 module.exports = router;
