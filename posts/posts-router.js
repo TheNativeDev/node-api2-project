@@ -154,37 +154,6 @@ router.get("/:id/comments", (req, res) => {
     });
 });
 
-// router.get("/:id/comments", (req, res) => {
-//   const id = req.params.id;
-//   const commentData = req.body;
-//   Posts.findById(id)
-//     .then(post => {
-//       if (post.length !== 0) {
-//         Posts.findPostComments(commentData)
-//           .then(comment => {
-//             res.status(201).json(...comment.text);
-//           })
-//           .catch(error => {
-//             console.log(error);
-//             res.status(500).json({
-//               error:
-//                 "There was an error while saving the comment to the database."
-//             });
-//           });
-//       } else {
-//         res
-//           .status(404)
-//           .json({ message: "The post with specified ID does not exist." });
-//       }
-//     })
-//     .catch(error => {
-//       console.log(error);
-//       res.status(500).json({
-//         message: "There was an error while saving the comment to the database."
-//       });
-//     });
-// });
-
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
 
