@@ -13,7 +13,7 @@ Use `Node.js` and `Express` to build an API that performs _CRUD_ operations on `
 
 ### Project Setup
 
-- import this repository into your account
+- import this repository into your account.
 - clone **your copy** of this repository.
 - **CD into the folder** where you cloned the repository.
 - Type `npm install` to download all dependencies.
@@ -53,7 +53,7 @@ A Blog Post in the database has the following structure:
 
 ### Comment Schema
 
-A Comment in the database has the following structure:
+A Comment in the database has the following structure:  
 
 ```js
 {
